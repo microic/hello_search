@@ -1,0 +1,21 @@
+body{
+	font-family:'Microsoft Yahei',Helvetica,sans-serif;
+	position:relative;
+	background-color:#F9F8F6;
+	min-width: 680px;
+}
+
+h1 {
+	padding-top: 16px; 
+	padding-bottom: 8px; 
+}
+
+h2 {
+	padding-top: 8px; 
+	padding-bottom: 4px; 
+}
+
+h4 {
+	padding-top: 6px; 
+	padding-bottom: 2px; 
+}

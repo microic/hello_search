@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="robots" content="none">
+  <title>Github Search</title>
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+   
+</head>
+<body>
+<div class="container-fluid">
+  <h1>Github Search</h1>
+  
+  <form onsubmit="search();return false">
+    <div class="form-group">
+      <input type="text" class="form-control" id="q" placeholder="请输入关键词进行搜索">
+    </div>
+  </form>
+
+<div class="row">
+  <div class="col-md-7"><h5 class="float-left">搜索结果</h5>
+    <div class="form-check float-right">
+      <input class="form-check-input" type="radio" name="sort" id="sort2" onchange="search()" value="option2">
+      <label class="form-check-label" for="sort2">
+        按热度排序&emsp;&emsp;
+      </label>
+    </div>
+    <div class="form-check float-right">
+      <input class="form-check-input" type="radio" name="sort" id="sort1" onchange="search()" value="option1" checked>
+      <label class="form-check-label" for="sort1">
+        按匹配度排序&emsp;&emsp;
+      </label>
+    </div>
+
+    <div class="list-group" id="r" style="clear:both;">
+    </div>
+  </div>  
+
+  <div class="col-md-5"><h5>相关推荐</h5>
+
+    <div class="list-group" id="s" style="clear:both;">
+      
+    </div>
+
+  </div>  
+ 
+</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script>
+
+var by = function(name){
+    return function(o, p){
+        var a, b;
+        if (typeof o === "object" && typeof p === "object" && o && p) {
+            a = o['_source']['star']
+            b = p['_source']['star']
+
+            if (a === b) {
+                return 0;
+            }
+            if (typeof a === typeof b) {
+                return a > b ? -1 : 1;
+            }
+            return typeof a > typeof b ? -1 : 1;
+        } else {
+            throw ("error");
+        }
+    }
+}
+
+function search() {
+  q = $("#q").val()
+  sortByHot = $("#sort2").prop('checked')
+
+
+  // alert(q)
+  $.ajax({
+    url: "http://140.82.17.30:5000/search",
+    type: "POST",
+    data: {
+      q: q,
+    },
+    dataType: "jsonp", 
+    success: function (raw) {
+      // alert(JSON.stringify(raw))
+      hits = raw['hits']
+      if (!hits) {
+        $("#r").html("共0条搜索结果")
+      }
+      hits = hits['hits']
+      if (!hits) {
+        $("#r").html("共0条搜索结果")
+      }
+
+      html = ""
+
+      if (sortByHot) hits.sort(by())
+
+      for (i in hits) {
+        id = hits[i]['_id'].split('->')
+        desc = hits[i]['_source']['desc']
+        star = hits[i]['_source']['star']
+        html += '<div class="list-group-item" style="border:none; padding-bottom: 0px;"><a target="_blank" href="'
+        html += 'https://github.com/' + id[0] + '/tree/' + id[1]
+        html += '" style="font-size:18px;color:#228822;">' + id[0]
+        html += '<span class="badge badge-pill">&emsp;star ' + star + '</span></a><br><span>' 
+        html += desc + '</span></div>'
+
+        // html += hits[i]['_source']['desc'] + "<br>"
+      }
+      html += "<br>共" + hits.length + "条搜索结果"
+      $("#r").html(html)
+    },
+    error: function (e) {
+      // $("#r").html(JSON.stringify(e))
+      $("#r").html("共0条搜索结果")
+    },
+  })
+}
+
+$(function(){
+  $("#s").html("暂无推荐")
+})
+</script>
+</body>
+</html>

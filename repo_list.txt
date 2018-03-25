@@ -1,0 +1,163 @@
+microic/niy
+microic/niy2
+
+elastic/elasticsearch-dsl-py
+alexjc/neural-enhance
+stillson/rdrand
+taolei87/sru
+Zeta36/chess-alpha-zero
+# deepfakes/faceswap
+Ldpe2G/DeepLearningForFun
+Tencent / ncnn
+lllyasviel / sketchKeras
+lllyasviel / style2paints
+LINChinaNN / light-CNN
+NervanaSystems / neon
+IDSIA / brainstorm
+S6Regen / Black-Swan
+in66-dev / In-Prestissimo
+NVIDIA / pix2pixHD
+richzhang / colorization
+phillipi / pix2pix
+emilwallner / Coloring-greyscale-images-in-Keras
+luhaofang / CACU
+stagadish / NNplusplus
+shadowsocks / shadowsocks-go
+yunjey / StarGAN
+createamind / vid2vid
+mlpack / mlpack
+accord-net / framework
+fixerAPI / fixer
+quickfixgo / quickfix
+piotrnar / gocoin
+wilsonfreitas / awesome-quant
+hootnot / oanda-api-v20
+XifengGuo / CapsNet-Keras
+Maratyszcza / FP16
+keras-team / keras
+tiny-dnn / tiny-dnn
+skelterjohn / go.matrix
+gonum / matrix
+gonum / gonum
+szagoruyko / wide-residual-networks
+numenta / nupic
+jameslyons / python_speech_features
+brookhong / tts
+lanl / rdrand
+gorgonia / gorgonia
+
+tensorflow/tensorflow
+pytorch/pytorch
+keras-team/keras
+BVLC/caffe
+exacity/deeplearningbook-chinese
+songrotek/Deep-Learning-Papers-Reading-Roadmap
+terryum/awesome-deep-learning-papers
+Microsoft/CNTK
+apache/incubator-mxnet
+donnemartin/data-science-ipython-notebooks
+ty4z2008/Qix
+kailashahirwar/cheatsheets-ai
+karpathy/convnetjs
+deeplearning4j/deeplearning4j
+ChristosChristofidis/awesome-deep-learning
+eriklindernoren/ML-From-Scratch
+alexjc/neural-enhance
+tflearn/tflearn
+caffe2/caffe2
+NVIDIA/FastPhotoStyle
+ujjwalkarn/Machine-Learning-Tutorials
+PAIR-code/deeplearnjs
+PaddlePaddle/Paddle
+ageron/handson-ml
+mnielsen/neural-networks-and-deep-learning
+kjw0612/awesome-deep-vision
+chiphuyen/stanford-tensorflow-tutorials
+yunjey/pytorch-tutorial
+david-gpu/srez
+aymericdamien/TopDeepLearning
+yenchenlin/DeepLearningFlappyBird
+amzn/amazon-dsstne
+
+elastic/elasticsearch
+ggreer/the_silver_searcher
+learn-anything/learn-anything
+elastic/kibana
+javve/list.js
+Rochester-NRT/RocAlphaGo
+BurntSushi/ripgrep
+learnbyexample/Command-line-text-processing
+krisk/Fuse
+sharkdp/fd
+
+twbs/bootstrap
+vuejs/vue
+angular/angular.js
+kamranahmedse/developer-roadmap
+laravel/laravel
+h5bp/html5-boilerplate
+webpack/webpack
+expressjs/express
+toddmotto/public-apis
+jakubroztocil/httpie
+angular/angular
+pallets/flask
+google/material-design-icons
+ionic-team/ionic
+nwjs/nw.js
+django/django
+GoogleChrome/puppeteer
+adobe/brackets
+scrapy/scrapy
+Trinea/android-open-project
+
+d3/d3
+antirez/redis
+google/protobuf
+awesomedata/awesome-public-datasets
+minimaxir/big-list-of-naughty-strings
+facebook/immutable-js
+select2/select2
+apache/incubator-superset
+coreos/etcd
+SwiftyJSON/SwiftyJSON
+raywenderlich/swift-algorithm-club
+fzaninotto/Faker
+pandas-dev/pandas
+Marak/faker.js
+donnemartin/interactive-coding-challenges
+danielmiessler/SecLists
+donnemartin/data-science-ipython-notebooks
+realm/realm-cocoa
+hashicorp/consul
+keon/algorithms
+facebook/relay
+magicalpanda/MagicalRecord
+luanfujun/deep-photo-styletransfer
+nicklockwood/iCarousel
+browserstate/history.js
+dzenbot/DZNEmptyDataSet
+bvaughn/react-virtualized
+SheetJS/js-xlsx
+dotnet/coreclr
+
+facebook/react-native
+electron/electron
+facebook/create-react-app
+h5bp/html5-boilerplate
+meteor/meteor
+reactjs/redux
+nvbn/thefuck
+ionic-team/ionic
+blueimp/jQuery-File-Upload
+jashkenas/backbone
+googlesamples/android-architecture
+nylas/nylas-mail
+zeit/next.js
+tastejs/todomvc
+astaxie/build-web-application-with-golang
+fastlane/fastlane
+flutter/flutter
+Polymer/polymer
+Thibaut/devdocs
+
