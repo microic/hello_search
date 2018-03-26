@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="robots" content="none">
-  <title>Github Search</title>
+  <title>Github Search v1.0.1</title>
 
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
@@ -16,7 +16,7 @@
   
   <form onsubmit="search();return false">
     <div class="form-group">
-      <input type="text" class="form-control" id="q" placeholder="请输入关键词进行搜索">
+      <input type="text" class="form-control" id="q" placeholder="请输入关键词，按回车键进行搜索">
     </div>
   </form>
 
@@ -86,6 +86,7 @@ function search() {
   $.ajax({
     url: "http://140.82.17.30:5000/search",
     type: "POST",
+    timeout: 5000,
     data: {
       q: q,
     },
@@ -105,6 +106,8 @@ function search() {
 
       if (sortByHot) hits.sort(by())
 
+      // alert(hits)
+    
       for (i in hits) {
         id = hits[i]['_id'].split('->')
         desc = hits[i]['_source']['desc']
@@ -120,9 +123,13 @@ function search() {
       html += "<br>共" + hits.length + "条搜索结果"
       $("#r").html(html)
     },
-    error: function (e) {
+    error: function (e, status) {
+      if (status == 'timeout') {
+        $("#r").html("服务器响应超时")
+      } else {
+        $("#r").html("共0条搜索结果")
+      }
       // $("#r").html(JSON.stringify(e))
-      $("#r").html("共0条搜索结果")
     },
   })
 }

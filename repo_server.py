@@ -19,6 +19,14 @@ def search():
 	callback = get('callback')
 
 	if q is None: return ""
+
+	# hits = None
+	# global er
+	# try:
+	# 	hits = er.search(q)
+	# except:
+	# 	er = EsRepo()
+
 	hits = er.search(q)
 
 	jstr = ""
