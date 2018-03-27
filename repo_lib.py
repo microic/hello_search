@@ -33,7 +33,8 @@ def parse_github(addr="", branch="master"):
 	if r is not None: star = int(r.group(1))
 	r = re.search(r"(\d{1,8}) [\S]+ forked this repository", html)
 	if r is not None: fork = int(r.group(1))
-	r = re.search(r"itemprop=\"about\">[\s]*([^<]+)", html)
+	# r = re.search(r"itemprop=\"about\">[\s]*([^<]+)", html)
+	r = re.search(r"itemprop=\"about\">([\s\S]*?)</span>", html)
 	if r is not None: desc = r.group(1)
 
 	return (watch, star, fork, desc)
@@ -83,6 +84,14 @@ class EsRepo():
 		self._doc_type = "type_repo"
 		self._client = Elasticsearch(host="140.82.17.30")
 	
+	def search_all(self):
+		res = self._client.search(
+			index=self._index,doc_type=self._doc_type,
+			size=1000,
+			filter_path=['hits.hits._id', 'hits.hits._source.star'],
+				body={"query": {"match_all": {}}})
+		return res
+
 	def search(self, q, fields=["desc", "content"]):
 		res = self._client.search(
 			index=self._index,doc_type=self._doc_type,
@@ -120,7 +129,13 @@ class EsRepo():
 	def delete(self, addr, branch="master"):
 		id = addr + '->' + branch
 		res = self._client.delete(index=self._index, doc_type=self._doc_type, id=id, ignore=404)
-		
+	
+	def delete_all(self):
+		res = self.search_all()
+		hits = res['hits']['hits']
+		for hit in hits:
+			self._client.delete(index=self._index, doc_type=self._doc_type, id=hit['_id'], ignore=404)
+
 	def insert(self, repo):
 		id = repo.addr + '->' + repo.branch
 
@@ -161,9 +176,9 @@ class EsRepo():
 
 if __name__ == '__main__':
 	er = EsRepo()
-	repo = RepoClass(addr="microic/niy")
+	repo = RepoClass(addr="vuejs/vue")
 	er.insert(repo)
-	# repo = er.get("microic/niy")
-	# print(repo.__dict__)
-	hits = er.search("tensorflow")
-	print(hits)
+	repo = er.get("vuejs/vue")
+	print(repo.__dict__)
+	# hits = er.search("tensorflow")
+	# print(hits)

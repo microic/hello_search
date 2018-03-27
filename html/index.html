@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="robots" content="none">
-  <title>Github Search v1.0.1</title>
+  <title>Github Search v1.2</title>
 
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
@@ -51,7 +51,6 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
@@ -77,10 +76,82 @@ var by = function(name){
     }
 }
 
+function suggest(addr) {
+  r = addr
+
+  $.ajax({
+    url: "http://140.82.17.30:5000/suggest",
+    type: "POST",
+    timeout: 5000,
+    data: {
+      r: r,
+    },
+    dataType: "jsonp", 
+    success: function (raw) {
+      // alert(JSON.stringify(raw))
+      
+      if (!Array.isArray(raw) || raw.length < 1) {
+        $("#s").html("共0条推荐")
+        return
+      }
+
+      // alert(raw.length)
+
+      html = ""
+
+      for (i in raw) {
+        html += '<div class="list-group-item" style="border:none; padding-bottom: 0px;"><a target="_blank" href="'
+        html += 'https://github.com/' + raw[i][0]
+        html += '" style="font-size:18px;color:#228822;">' + raw[i][0]
+        html += '</a></div>'
+
+        // html += hits[i]['_source']['desc'] + "<br>"
+      }
+      html += "<br>共" + raw.length + "条推荐"
+      $("#s").html(html)
+    },
+    error: function (e, status) {
+      if (status == 'timeout') {
+        $("#s").html("服务器响应超时")
+      } else {
+        $("#s").html("共0条推荐")
+      }
+      // $("#r").html(JSON.stringify(e))
+    },
+  })
+}
+
+function setCookie(cname, cvalue) {
+    exdays = 5
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function my_click(addr) {
+  suggest(addr)
+  setCookie('addr', addr)
+}
+
 function search() {
   q = $("#q").val()
   sortByHot = $("#sort2").prop('checked')
-
 
   // alert(q)
   $.ajax({
@@ -114,7 +185,8 @@ function search() {
         star = hits[i]['_source']['star']
         html += '<div class="list-group-item" style="border:none; padding-bottom: 0px;"><a target="_blank" href="'
         html += 'https://github.com/' + id[0] + '/tree/' + id[1]
-        html += '" style="font-size:18px;color:#228822;">' + id[0]
+        html += '" style="font-size:18px;color:#228822;" onclick="my_click('
+        html += "'" + id[0] + "'" + ')">' + id[0]
         html += '<span class="badge badge-pill">&emsp;star ' + star + '</span></a><br><span>' 
         html += desc + '</span></div>'
 
@@ -135,7 +207,16 @@ function search() {
 }
 
 $(function(){
+
+
+  $("#r").html("暂无搜索结果")
   $("#s").html("暂无推荐")
+
+  addr = getCookie('addr')
+  if (addr) {
+    // alert(addr)
+    suggest(addr)
+  }
 })
 </script>
 </body>
