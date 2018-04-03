@@ -61,17 +61,21 @@ class NeoRepo():
 
 	def match_user(self, user, rel_type='star'):
 		if isinstance(user, str): user = self.get_user(user)
+		if user is None: return []
 		match = self.g.match(start_node=user,bidirectional=False,rel_type=rel_type)
 		return match
 
 	def match_repo(self, repo, rel_type='star'):
 		if isinstance(repo, str): repo = self.get_repo(repo)
+		if repo is None: return []
 		match = self.g.match(end_node=repo,bidirectional=False,rel_type=rel_type)
 		return match
 
 	def match_one(self, user, repo, rel_type='star'):
 		if isinstance(user, str): user = self.get_user(user)
 		if isinstance(repo, str): repo = self.get_repo(repo)
+		if user is None: return None
+		if repo is None: return None
 		match = self.g.match_one(start_node=user,end_node=repo,bidirectional=False,rel_type=rel_type)
 		return match
 
@@ -89,6 +93,7 @@ class NeoRepo():
 				if repo_suggest['name'] in count:
 					count[repo_suggest['name']] += 1
 				else: count[repo_suggest['name']] = 1
+		if count == {}: return []
 		return (sorted(count.items(), key=lambda item:item[1], reverse=True))[1:51]
 
 			# repos 
@@ -96,8 +101,15 @@ class NeoRepo():
 
 if __name__ == '__main__':
 	nr = NeoRepo()
-	suggest = nr.suggest("tensorflow/tensorflow")
-	print(suggest)
+
+	# repo = nr.get_repo("microic/niy")
+	# print(repo)
+	repos = nr.match_repo("microic/niy2")
+	for item in repos:
+		print(item)
+
+	# suggest = nr.suggest("tensorflow/tensorflow")
+	# print(suggest)
 	# nr.g.delete_all()
 
 	# nr.add_user("microic")
